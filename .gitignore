@@ -1,3 +1,6 @@
+# Logs
+*.log
+
 # Prerequisites
 *.d
 
@@ -30,3 +33,11 @@
 *.exe
 *.out
 *.app
+
+# LaTeX intermediaries
+*.aux
+*.fdb_latexmk
+*.fls
+*.pdf
+*.synctex.gz
+*.toc
