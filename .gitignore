@@ -45,3 +45,5 @@
 *.blg
 *.bcf
 *.run.xml
+*.html
+*.adoc
