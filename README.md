@@ -16,4 +16,5 @@ pandoc ECS.tex -o ECS.pdf
 
 ### Example AsciiDoc
 ```bash
-pandoc ECS.tex -o ECS.adoc && asciidoc ECS.adoc```
+pandoc ECS.tex -o ECS.adoc && asciidoc ECS.adoc
+```
