@@ -16,9 +16,24 @@ struct Rotation {
     float pitch, yaw, roll;
 };
 
+// ToDo: do not allow dublicates
+// ToDo: support multiple components per system
+class TransformationSystem : public Entra::System<Transform, Rotation> {
+    public:
+        explicit TransformationSystem(Entra::Registry* pRegistry, std::string a): Entra::System<Transform, Rotation>(pRegistry) {
+            std::cout << a << std::endl;
+        }
+        void update(double deltaTime) {
+            for (auto component : components) {
+                std::cout << std::get<0>(component)->x << std::endl;
+            }
+        }
+};
+
 // ToDo: Systems need to to be able to have multiple components they care about
 int main() {
     Entra::Registry registry;
+    registry.addSystem<TransformationSystem>("AAAAAAAAA");
 
     Entra::EntityId id1; 
     Entra::EntityId id2; 
@@ -45,6 +60,8 @@ int main() {
 
     std::cout << registry.getComponent<Transform>(id1)->x << std::endl;
     std::cout << registry.getComponent<Transform>(id2)->x << std::endl;
+    std::cout << "====================" << std::endl;
+    registry.update(0.2);
     std::cout << "====================" << std::endl;
 
     return 0;

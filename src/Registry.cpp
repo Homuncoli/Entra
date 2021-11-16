@@ -28,3 +28,9 @@ void Entra::Registry::deleteEntity(EntityId id) {
     // ToDo: Delete Components, be mindful of the index in entityComponentIndex, since the indicies of other entites should not all be changed
     freeEntityIds.push(id);
 }
+
+void Entra::Registry::update(double deltaTime) {
+    for (int i=0; i<systems.size(); i++) {
+        systems[i]->update(deltaTime);
+    }
+}

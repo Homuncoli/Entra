@@ -4,7 +4,7 @@ project(Entra VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-add_library(Entra src/Registry.cpp)
+add_library(Entra src/Registry.cpp src/Component.cpp)
 target_include_directories(Entra PUBLIC ./include)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
