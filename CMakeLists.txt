@@ -16,6 +16,6 @@ target_link_libraries(EntraRun PRIVATE Entra)
 
 add_subdirectory(./googletest)
 include_directories(./googletest/googletest/include)
-add_executable(EntraTest test/Entra.cpp)
+add_executable(EntraTest test/Entra.cpp test/Registry.cpp test/Entity.cpp test/Component.cpp test/System.cpp)
 target_link_libraries(EntraTest Entra gtest)
 add_test(UnitTests runUnitTests)

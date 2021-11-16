@@ -1,5 +1,10 @@
 # Build Results
 build/
+cmake-build-*/
+
+# IDE
+.vscode/
+.idea
 
 # Logs
 *.log

@@ -11,6 +11,13 @@
 #include <iostream>
 
 namespace Entra {
+    typedef std::size_t SystemId;
+
+    template<class System>
+    SystemId getSystemId() {
+        return typeid(System).hash_code();
+    }
+
     class BaseSystem {
         public:
             BaseSystem() = default;

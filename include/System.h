@@ -8,11 +8,11 @@
 #include <vector>
 #include <map>
 #include <tuple>
+#include <type_traits>
 
 #include <iostream>
 
 namespace Entra {
-
     template<class...Components>
     class System : public BaseSystem {
         protected:

@@ -18,9 +18,9 @@ struct Rotation {
 
 // ToDo: do not allow dublicates
 // ToDo: support multiple components per system
-class TransformationSystem : public Entra::System<Transform, Rotation> {
+class TransformationSystem : public Entra::System<Transform> {
     public:
-        explicit TransformationSystem(Entra::Registry* pRegistry, std::string a): Entra::System<Transform, Rotation>(pRegistry) {
+        explicit TransformationSystem(Entra::Registry* pRegistry, std::string a): Entra::System<Transform>(pRegistry) {
             std::cout << a << std::endl;
         }
         void update(double deltaTime) {
@@ -42,16 +42,6 @@ int main() {
     std::cout << "Create new entity: " << (id1 = registry.createEntity()) << std::endl;
     std::cout << "Create new entity: " << (id2 = registry.createEntity()) << std::endl;
     std::cout << "Create new entity: " << (id3 = registry.createEntity()) << std::endl;
-    std::cout << "====================" << std::endl;
-
-    registry.deleteEntity(id1);
-    registry.deleteEntity(id2);
-    std::cout << "Delete entity" << std::endl;
-    std::cout << "Delete entity" << std::endl;
-    std::cout << "Create new entity: " << (id1 = registry.createEntity()) << std::endl;
-    std::cout << "Create new entity: " << (id2 = registry.createEntity()) << std::endl;
-    std::cout << "====================" << std::endl;
-
     registry.addComponent<Transform>(id1, 1, 2, 3);
     registry.addComponent<Transform>(id2, 4, 5, 6);
     registry.addComponent<Rotation>(id2);
