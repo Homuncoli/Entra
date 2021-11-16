@@ -13,3 +13,9 @@ include(CPack)
 
 add_executable(EntraRun Entra.cpp)
 target_link_libraries(EntraRun PRIVATE Entra)
+
+add_subdirectory(./googletest)
+include_directories(./googletest/googletest/include)
+add_executable(EntraTest test/Entra.cpp)
+target_link_libraries(EntraTest Entra gtest)
+add_test(UnitTests runUnitTests)
