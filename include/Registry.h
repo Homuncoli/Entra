@@ -97,7 +97,7 @@ namespace Entra {
             }
 
             template<class T, class...Args>
-            void addComponent(EntityId id, Args... args) {
+            T* addComponent(EntityId id, Args... args) {
                 const ComponentId cId = getComponentId<T>();
                 const Signiture cSigniture = getSigniture<T>();
                 const size_t index = components[cId].size();
@@ -115,6 +115,8 @@ namespace Entra {
                 for (int i=0; i<systems.size(); i++) {
                     systems[i]->processEntity(id, entitySignitures[id]);
                 }
+
+                return std::any_cast<T>(&(components[cId][index]));
             }
 
             template<class Component>
