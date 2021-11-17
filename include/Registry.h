@@ -122,7 +122,9 @@ namespace Entra {
             template<class Component>
             bool hasComponent(EntityId eId) {
                 const ComponentId cId = getComponentId<Component>();
-                return entityToIndex[eId].find(cId) != entityToIndex[eId].end();
+                const Signiture cSign = componentSignitures[cId];
+
+                return (entitySignitures[eId] & cSign) == cSign;
             }
 
             template<class Component>
@@ -150,7 +152,9 @@ namespace Entra {
                 const size_t lastIndex = components[componentId].size()-1;
                 const EntityId lastId = indexToEntity[currentIndex][componentId];
 
-                components[componentId][currentIndex] = components[componentId][lastId];
+                entitySignitures[currentId] &= ~(componentSignitures[componentId]);
+
+                components[componentId][currentIndex] = components[componentId][lastIndex];
                 components[componentId].pop_back();
 
                 entityToIndex[currentId].erase(componentId);

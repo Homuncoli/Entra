@@ -26,7 +26,7 @@ Entra::EntityId Entra::Registry::addEntity() {
 
 bool Entra::Registry::hasEntity(EntityId id) {
     auto find = std::find(freeEntityIds.begin(), freeEntityIds.end(), id);
-    return id <= nextEntityId && find == freeEntityIds.end();
+    return id < nextEntityId && find == freeEntityIds.end();
 }
 
 void Entra::Registry::removeEntity(EntityId id) {

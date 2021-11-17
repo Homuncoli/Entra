@@ -33,13 +33,10 @@ class ComponentFixture : public ::testing::Test {
     }
 };
 
-TEST_F(ComponentFixture, AddSingle) {
-    bool has = registry->hasComponent<Transform>(entity);
-    ASSERT_FALSE(has);
 
+TEST_F(ComponentFixture, AddSingle) {
     registry->addComponent<Transform>(entity);
-    has = registry->hasComponent<Transform>(entity);
-    ASSERT_TRUE(has);
+    ASSERT_TRUE(registry->hasComponent<Transform>(entity)) << "should have Transfrom component";
 }
 
 TEST_F(ComponentFixture, AddWithArgument) {
