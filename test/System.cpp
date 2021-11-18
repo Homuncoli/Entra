@@ -34,6 +34,12 @@ class MutliSignitureSystem : public Entra::System<Transform, Rotation> {
         explicit MutliSignitureSystem(Entra::Registry* pRegistry): Entra::System<Transform, Rotation>(pRegistry) {}
         void update(double deltaTime) {}
 };
+class CountSystem : public Entra::System<Transform> {
+    public:
+        explicit CountSystem(Entra::Registry* pRegistry): Entra::System<Transform>(pRegistry) {}
+        void update(double deltaTime) {}
+        int getCount() { return components.size(); }
+};
 
 TEST(System, CreationWithoutArgs) {
     ArgumentSystem* system = registry.addSystem<ArgumentSystem>();
@@ -60,10 +66,37 @@ TEST(System, Get) {
     ASSERT_EQ(init, get);
 }
 
-TEST(System, Delete) {
+TEST(System, Remove) {
     ArgumentSystem* init = registry.addSystem<ArgumentSystem>("BBB");
     ASSERT_TRUE(registry.hasSystem<ArgumentSystem>());
 
     registry.removeSystem<ArgumentSystem>();
     ASSERT_FALSE(registry.hasSystem<ArgumentSystem>());
+}
+
+class SystemFixture : public ::testing::Test {
+    protected:
+        Registry* registry;
+
+        void SetUp() override {
+            registry = new Registry();
+        }
+
+        void TearDown() override {
+            delete registry;
+        }
+};
+
+TEST_F(SystemFixture, CountComponents) {
+    EntityId eId1 = registry->addEntity();
+    EntityId eId2 = registry->addEntity();
+    EntityId eId3 = registry->addEntity();
+
+    registry->addComponent<Transform>(eId1);
+    registry->addComponent<Transform>(eId2);
+    registry->addComponent<Rotation>(eId2);
+    registry->addComponent<Rotation>(eId3);
+
+    auto* system = registry->addSystem<CountSystem>();
+    ASSERT_EQ(system->getCount(), 2);
 }

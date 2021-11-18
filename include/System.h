@@ -26,10 +26,16 @@ namespace Entra {
             explicit System(Registry* pRegistry): Entra::BaseSystem(), pRegistry(pRegistry), signiture(Entra::getSigniture<Components...>()) {}
             const Signiture& getSigniture() { return signiture; }
             
-            void processEntity(EntityId id, Signiture signiture) override {
-                if ((signiture & this->signiture) == this->signiture) {
+            void processEntity(EntityId id, Signiture newSigniture, Signiture oldSigniture) override {
+                if ((newSigniture & signiture) == signiture && (oldSigniture & signiture) != signiture) {
                     components.push_back(pRegistry->getComponents<Components...>(id));
+                    entityIndex[id] = components.size() - 1;
                 }
+                if ((oldSigniture & signiture) == signiture && (newSigniture & signiture) != signiture) {
+                    components.erase(components.begin() + entityIndex[id]);
+                    entityIndex.erase(id);
+                }
+
             }
     };
 }

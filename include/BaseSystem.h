@@ -23,6 +23,6 @@ namespace Entra {
             BaseSystem() = default;
             virtual ~BaseSystem() = default;
             virtual void update(double deltaTime) = 0;
-            virtual void processEntity(EntityId id, Signiture signiture) = 0;
+            virtual void processEntity(EntityId id, Signiture newSigniture, Signiture oldSigniture) = 0;
     };
 }

@@ -30,7 +30,17 @@ bool Entra::Registry::hasEntity(EntityId id) {
 }
 
 void Entra::Registry::removeEntity(EntityId id) {
-    // ToDo: Remove
+    for (auto system : systems) {
+        system->processEntity(id, INVALID_SIGNITURE, entitySignitures[id]);
+    }
+
+    for (auto index : entityToIndex[id]) {
+        indexToEntity[index.second].erase(index.first);
+    }
+     entityToIndex.erase(id);
+     entitySignitures.erase(id);
+
+     freeEntityIds.push_back(id);
 }
 
 void Entra::Registry::update(double deltaTime) {

@@ -64,6 +64,10 @@ namespace Entra {
                     systems.push_back(new System(this, std::forward<Args>(args)...));
                 }
 
+                for(auto entitySigniture : entitySignitures) {
+                    systems[index]->processEntity(entitySigniture.first, entitySigniture.second, INVALID_SIGNITURE);
+                }
+
                 return static_cast<System*>(systems[index]);
             }
 
@@ -101,6 +105,7 @@ namespace Entra {
                 const ComponentId cId = getComponentId<T>();
                 const Signiture cSigniture = getSigniture<T>();
                 const size_t index = components[cId].size();
+                const Signiture oldSigniture = entitySignitures[id];
 
                 auto find = entityToIndex[id].find(cId);
                 if (find != entityToIndex[id].end()) {
@@ -113,7 +118,7 @@ namespace Entra {
                 components[cId].push_back(T(std::forward<Args>(args)...));
 
                 for (int i=0; i<systems.size(); i++) {
-                    systems[i]->processEntity(id, entitySignitures[id]);
+                    systems[i]->processEntity(id, entitySignitures[id], oldSigniture);
                 }
 
                 return std::any_cast<T>(&(components[cId][index]));
@@ -151,6 +156,7 @@ namespace Entra {
                 const size_t currentIndex = entityToIndex[currentId][componentId];
                 const size_t lastIndex = components[componentId].size()-1;
                 const EntityId lastId = indexToEntity[currentIndex][componentId];
+                const Signiture oldSigniture = entitySignitures[currentId];
 
                 entitySignitures[currentId] &= ~(componentSignitures[componentId]);
 
@@ -163,6 +169,10 @@ namespace Entra {
                 if (currentIndex != lastIndex) {
                     entityToIndex[lastId][componentId] = currentIndex;
                     indexToEntity[currentIndex][componentId] = lastId;
+                }
+
+                for (int i=0; i<systems.size(); i++) {
+                    systems[i]->processEntity(currentId, entitySignitures[currentId], oldSigniture);
                 }
             }
     };
