@@ -36,9 +36,16 @@ class TransformationSystem : public Entra::System<Transform, Rotation> {
         }
 };
 
-int main() {
-    constexpr size_t N_ENTITIES = 10000;
-    constexpr size_t N_CYCLES = 100;
+int main(int argc, char **argv) {
+    size_t N_ENTITIES = 10000;
+    size_t N_CYCLES = 10000;
+
+    if (argc >= 2) {
+        N_ENTITIES = std::atoi(argv[1]);
+    }
+    if (argc >= 3) {
+        N_CYCLES = std::atoi(argv[2]);
+    }
     
     auto start = high_resolution_clock::now();
     Entra::Registry* registry = new Entra::Registry();
@@ -53,8 +60,7 @@ int main() {
     start = high_resolution_clock::now();
     for (int i=0; i<N_ENTITIES; i++) {
         Entra::EntityId id = registry->addEntity();
-        registry->addComponent<Transform>(id, 0, 0, 0);
-        registry->addComponent<Rotation>(id);
+        registry->addComponent<Transform>(id, i, 0, 0);
     }
     end = high_resolution_clock::now();
     std::cout << N_ENTITIES << " entities creation: " << duration_cast<milliseconds>(end - start).count() << "ms" << std::endl;
