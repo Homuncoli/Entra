@@ -1,20 +1,5 @@
 # Entra
-This repository is an implementation of an entity component system. It provides the source code for a library as well a paper explaining its underlaying structure and implementation details.
+Entra is a *Entity Component System* made for educational purposes.
 
-## Paper
-To build the aforementioned paper "Implementation and usage of Entity Component Systems" use the ECS.tex file to build your desired output format via *pandoc*.
-
-### Example PDF
-Either directly via *LaTeX*(recommened)
-```bash
-pdflatex ECS.tex
-```
-or via *pandoc*
-```bash
-pandoc ECS.tex -o ECS.pdf
-```
-
-### Example AsciiDoc
-```bash
-pandoc ECS.tex -o ECS.adoc && asciidoc ECS.adoc
-```
+## Purpose
+The goal of this project is to gain an understanding of ECS systems and gather experience in library design. Functionally this project aims to be suitable for small indie projects and games.
