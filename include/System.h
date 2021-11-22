@@ -35,7 +35,6 @@ namespace Entra {
                     components.erase(components.begin() + entityIndex[id]);
                     entityIndex.erase(id);
                 }
-
             }
     };
 }

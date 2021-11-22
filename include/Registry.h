@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Component.h"
 #include "BaseSystem.h"
+#include "PoolAllocator.h"
 
 #include <any>
 #include <vector>
@@ -31,7 +32,7 @@ namespace Entra {
             // store all instances of one component continously
             std::map<ComponentId, std::vector<std::any>> components;
             
-            std::vector<BaseSystem*> systems;
+            std::vector<BaseSystem*> systems; 
             std::map<Entra::SystemId, size_t> systemToIndexMapping;
             std::map<size_t, Entra::SystemId> indexToSystemMapping;
 
@@ -115,7 +116,7 @@ namespace Entra {
                 entitySignitures[id] |= cSigniture;
                 entityToIndex[id][cId] = index;
                 indexToEntity[index][cId] = id;
-                components[cId].push_back(T(std::forward<Args>(args)...));
+                components[cId].emplace_back(T(std::forward<Args>(args)...));
 
                 for (int i=0; i<systems.size(); i++) {
                     systems[i]->processEntity(id, entitySignitures[id], oldSigniture);

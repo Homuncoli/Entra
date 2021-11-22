@@ -9,29 +9,41 @@ using std::chrono::duration;
 using std::chrono::milliseconds;
 
 struct Transform {
-    float x = 1,y,z;
+    float x,y,z,w;
 
     Transform(float x, float y, float z) {
         this->x = x;
         this->y = y;
         this->z = z;
+        this->w = 0;
+    }
+
+    static Entra::PoolAllocator allocator;
+
+    static void* operator new(size_t size) {
+        return allocator.allocate(size);
+    }
+ 
+    static void operator delete(void* ptr, size_t size) {
+        return allocator.deallocate(ptr, size);
     }
 };
+Entra::PoolAllocator Transform::allocator{8};
 
 struct Rotation {
     float pitch, yaw, roll;
 };
 
-class TransformationSystem : public Entra::System<Transform, Rotation> {
+class TransformationSystem : public Entra::System<Transform> {
     private:
         float gravity;
     public:
-        explicit TransformationSystem(Entra::Registry* pRegistry, float g): Entra::System<Transform, Rotation>(pRegistry), gravity(g) {}
+        explicit TransformationSystem(Entra::Registry* pRegistry, float g): Entra::System<Transform>(pRegistry), gravity(g) {}
+        ~TransformationSystem() = default;
         
         void update(double deltaTime) {
             for (auto component : components) {
-                for (int i=0; i<20; i++)
-                    std::get<0>(component)->y *= gravity * deltaTime;
+                std::get<0>(component)->x *= gravity * deltaTime;
             }
         }
 };
