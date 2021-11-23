@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.21.4)
 project(Entra VERSION 0.1.0)
 
 set(CMAKE_BUILD_TYPE Release)
-set(BUILD_TESTS OFF)
-set(BUILD_RUN OFF)
+option(BUILD_TESTS "build tests" OFF)
+option(BUILD_RUN "build runnable executable" OFF)
 
 add_library(Entra src/Registry.cpp src/Component.cpp)
 target_include_directories(Entra PUBLIC ./include)
