@@ -5,7 +5,7 @@ set(CMAKE_BUILD_TYPE Release)
 option(BUILD_TESTS "build tests" OFF)
 option(BUILD_RUN "build runnable executable" OFF)
 
-add_library(Entra src/Registry.cpp src/Component.cpp)
+add_library(Entra SHARED src/Registry.cpp src/Component.cpp)
 target_include_directories(Entra PUBLIC ./include)
 
 if (BUILD_RUN)
